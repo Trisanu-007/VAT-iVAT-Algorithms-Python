@@ -96,7 +96,7 @@ plt.title(label="MST of the dataset")
 # length_partition = np.zeros((num_clusters))
 
 # for i in range(0, num_clusters):
-#     length_partition[i] = np.max(np.where(Pi == i).shape)
+#     length_partition[i] = np.max(np.array(np.where(Pi == i)).shape)
 
 # length_partition_sorted, length_partition_sorted_idx = - \
 #     np.sort(-length_partition), np.argsort(-length_partition)
@@ -105,13 +105,15 @@ plt.title(label="MST of the dataset")
 # for i in range(0, num_clusters):
 
 #     original_idx = length_partition_sorted_idx[i]
-#     partition = np.where(Pi == original_idx)
-#     proposed_idx = mode(pi_true(partition))
+#     partition = np.array(np.where(Pi == original_idx))
+#     proposed_idx = mode(pi_true[partition])
 
 #     if np.sum(index_remaining == proposed_idx) != 0:
-#         cluster_matrix_mod[np.where(Pi == original_idx)] = proposed_idx
+#         cluster_matrix_mod[np.array(
+#             np.where(Pi == original_idx))] = proposed_idx
 #     else:
-#         cluster_matrix_mod[np.where(Pi == original_idx)] = index_remaining[0]
+#         cluster_matrix_mod[np.array(
+#             np.where(Pi == original_idx))] = index_remaining[0]
 
 #     index_remaining = np.delete(
 #         index_remaining, index_remaining == proposed_idx)
@@ -129,4 +131,4 @@ plt.title(label="MST of the dataset")
 
 
 # plt.title(label="VAT generated partition of the dataset")
-# plt.show()
+plt.show()
