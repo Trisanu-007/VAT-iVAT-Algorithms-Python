@@ -13,6 +13,7 @@ from VAT import VAT
 total_num_of_points = 2000
 num_clusters = 4
 
+
 odds_matrix = np.ones((1, 4), dtype=int)
 
 data_matrix_with_labels, mean_matrix, var_matrix = data_generate_non_cs(
