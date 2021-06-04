@@ -49,6 +49,7 @@ def VAT(mat):
     return RV, C, I, RI, cut
 
 
+# For debugging purposes
 if __name__ == "__main__":
     f = open("rs.txt", "r")
     lst = []

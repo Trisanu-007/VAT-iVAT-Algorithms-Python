@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.spatial import distance_matrix
 
 
 def distance2(A, B):
@@ -12,4 +13,5 @@ def distance2(A, B):
 
     zero_mask = np.less(D_squared, 0.0)
     D_squared[zero_mask] = 0.0
+    # return distance_matrix(A, B)
     return np.sqrt(D_squared)
