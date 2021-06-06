@@ -1,19 +1,20 @@
-from iVAT import iVAT
 import time
 
 import numpy as np
 from matplotlib import cm
 from matplotlib import pyplot as plt
+from scipy.stats import mode
 
 from clustiVAT import clustiVAT
 from data_generate import data_generate
 from distance2 import distance2
+from iVAT import iVAT
 
-total_no_of_points = 1000
+total_no_of_points = 10000
 clusters = 4
 odds_matrix = np.array(
     [np.ceil(clusters*np.random.rand(clusters))]).astype(int)
-print(odds_matrix.shape)
+
 colors_1 = np.array(cm.get_cmap().colors)
 colors = np.zeros((clusters, 3))
 
@@ -39,7 +40,7 @@ n, p = x.shape
 
 tic = time.time()
 
-pi_true = x[:, -1]
+Pitrue = x[:, -1]
 x = x[:, 0:-1]
 
 cp = 10
@@ -95,5 +96,59 @@ for i in range(np.max(ind.shape)):
 p5 = plt.figure(5)
 plt.plot(x[I, 0], x[I, 1], 'r.')
 plt.title(label="MST of the dataset")
+
+p6 = plt.figure(6)
+
+for i in range(0, clusters):
+    if i == 0:
+        partition = I[0:ind[i]]
+    elif i == clusters-1:
+        partition = I[ind[i-1]:np.max(I.shape)]
+    else:
+        partition = I[ind[i-1]:ind[i]-1]
+
+    plt.plot(x[smp[partition], 0], x[smp[partition], 1],
+             marker='o', color=colors[i-1, :], markersize=1)
+
+plt.title('VAT generated partition of the sample points (different colors represent different clusters)')
+
+cluster_matrix_mod = np.zeros((total_no_of_points,), dtype=int)
+length_partition = np.zeros((clusters,), dtype=int)
+
+
+for i in range(0, clusters):
+    length_partition[i] = np.max(np.where(Pi == i)[0].shape)
+
+length_partition_sort, length_partition_sort_idx = - \
+    np.sort(-length_partition), np.argsort(-length_partition)
+index_remaining = np.linspace(1, clusters, clusters, dtype=int)
+
+for i in range(0, clusters):
+
+    original_idx = length_partition_sort_idx[i]
+    partition = np.where(Pi == original_idx)[0]
+    proposed_idx = mode(Pitrue[partition]).mode
+
+    if np.sum(index_remaining == proposed_idx) != 0:
+        cluster_matrix_mod[np.where(Pi == original_idx)[0]] = proposed_idx
+    else:
+        cluster_matrix_mod[np.where(Pi == original_idx)[
+            0]] = index_remaining[0]
+
+    index_remaining = np.delete(
+        index_remaining, index_remaining == proposed_idx)
+
+p7 = plt.figure(7)
+for i in range(0, clusters):
+    cluster_matrix_unique = np.unique(cluster_matrix_mod)
+    cluster_index = np.where(cluster_matrix_mod == cluster_matrix_unique[i])[0]
+    plt.plot(x[cluster_index, 0], x[cluster_index, 1],
+             marker='o', color=colors[i-1, :], markersize=1)
+
+plt.title('VAT generated partition of the entire dataset (different colors represent different clusters)')
+
+crct_prct_clustivat = (
+    (np.max(x.shape)-np.max(np.where(Pitrue-cluster_matrix_mod.T != 0)[0].shape))/np.max(x.shape))*100
+print(crct_prct_clustivat)
 
 plt.show()
