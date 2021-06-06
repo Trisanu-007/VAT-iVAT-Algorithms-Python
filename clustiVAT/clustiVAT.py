@@ -12,14 +12,16 @@ def clustiVAT(x, cp, ns):
 
     ind = np.argmin(rp, axis=1)
 
-    smp = np.empty((0, 0))
+    smp = np.empty((0, 1), dtype=int)
 
     for i in range(0, cp):
-        s = np.where(ind == i)
-        nt = np.ceil(ns*np.max(s.shape)/rows)
-        idx = np.ceil(np.random.rand(nt, 1)*np.max(s.shape))
-        smp = np.vstack((smp, s[idx]))
+        s = np.where(ind == i)[0].astype(int)
+        nt = np.ceil(ns*np.max(s.shape)/rows).astype(int)
+        idx = np.ceil(np.random.rand(nt, 1)*np.max(s.shape)).astype(int)
+        smp = np.vstack((smp, s[idx-1]))
 
+    r_smp, c_smp = smp.shape
+    smp = np.reshape(smp, (r_smp*c_smp))
     rs = distance2(x[smp, :], x[smp, :])
 
     rv, C, I, ri, cut = VAT(rs)

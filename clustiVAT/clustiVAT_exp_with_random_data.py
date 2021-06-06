@@ -1,5 +1,5 @@
 from iVAT import iVAT
-from time import time
+import time
 
 import numpy as np
 from matplotlib import cm
@@ -53,13 +53,13 @@ cuts, ind = -np.sort(-cut), np.argsort(-cut)
 ind = np.sort(ind[0:clusters-1])
 
 Pi = np.zeros((n,))
-Pi[smp[I[1, ind[0]-2]]] = 1
+Pi[smp[I[ind[0]-2]]] = 1
 Pi[smp[I[ind[-1]:-1]]] = clusters
 
-for i in range(1, clusters):
+for i in range(1, clusters-1):
     Pi[smp[I[ind[i-1]:ind[i]-1]]] = i
 
-nsmp = np.setdiff1d(np.linspace(1, clusters, clusters-1), smp)
+nsmp = np.setdiff1d(np.linspace(1, clusters, clusters, dtype=int), smp)
 r = distance2(x[smp, :], x[nsmp, :])
 s = np.argmin(r, axis=0)
 Pi[nsmp] = Pi[smp[s]]
@@ -81,9 +81,9 @@ plt.imshow(RiV, cmap=cm.get_cmap('gray'), extent=[-1, 1, -1, 1])
 plt.title(label="iVAT dissimilarity matrix image")
 
 p4 = plt.figure(4)
-for i in range(0, np.max(I.shape)-1):
+for i in range(0, np.max(smp.shape)-1):
     x_cor = np.hstack((x[smp[I[i]], 0], x[smp[I[C[i]]], 0]))
-    y_cor = np.hstack((x[I[i], 1], x[I[C[i]], 1]))
+    y_cor = np.hstack((x[smp[I[i]], 1], x[smp[I[C[i]]], 1]))
     plt.plot(x_cor, y_cor, 'b')
 
 for i in range(np.max(ind.shape)):
