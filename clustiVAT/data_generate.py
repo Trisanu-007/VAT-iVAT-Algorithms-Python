@@ -8,8 +8,8 @@ def data_generate(number_of_clusters, odds_matrix, total_no_of_points):
     mean_x_matrix = 1000*ran.randn(1, number_of_clusters)
     mean_Y_matrix = 1000*ran.randn(1, number_of_clusters)
 
-    var_x_matrix = 100*np.abs(ran.randn(1, number_of_clusters))
-    var_y_matrix = 100*np.abs(ran.randn(1, number_of_clusters))
+    var_x_matrix = 30*np.abs(ran.randn(1, number_of_clusters))
+    var_y_matrix = 30*np.abs(ran.randn(1, number_of_clusters))
 
     x_cor = int(np.ceil(total_no_of_points/np.sum(odds_matrix))
                 )*np.sum(odds_matrix)
