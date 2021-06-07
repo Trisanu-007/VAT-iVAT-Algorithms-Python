@@ -21,7 +21,7 @@ def data_generate(number_of_clusters, odds_matrix, total_no_of_points):
         for j in range(number_of_clusters):
             for _ in range(odds_matrix[0][j]):
                 data_matrix_with_labels[l:] = [mean_x_matrix[:, j] + var_x_matrix[:, j] * ran.randn(
-                    1), mean_Y_matrix[:, j] + var_y_matrix[:, j] * ran.randn(1), int(j+1)]
+                    1), mean_Y_matrix[:, j] + var_y_matrix[:, j] * ran.randn(1), int(j)]
 
                 l += 1
 

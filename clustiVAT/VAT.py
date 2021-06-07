@@ -29,7 +29,11 @@ def VAT(mat):
     for r in range(3, rows):
         y, i = np.amin(mat[np.ix_(I, J)], axis=0), np.argmin(
             mat[np.ix_(I, J)], axis=0)
-        y, j = np.amin(y), np.argmin(y)
+        try:
+            y, j = np.amin(y), np.argmin(y)
+        except ValueError:
+            pass
+            
         I = np.hstack((I, J[j]))
         J = np.delete(J, J == J[j])
         C = np.hstack((C, i[j]))

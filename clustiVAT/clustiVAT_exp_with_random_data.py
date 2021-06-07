@@ -10,7 +10,7 @@ from data_generate import data_generate
 from distance2 import distance2
 from iVAT import iVAT
 
-total_no_of_points = 10000
+total_no_of_points = 1000
 clusters = 4
 odds_matrix = np.array(
     [np.ceil(clusters*np.random.rand(clusters))]).astype(int)
@@ -28,10 +28,11 @@ data_matrix_with_labels, mean_matrix, var_matrix = data_generate(
 
 p1 = plt.figure(1)
 plt.title(label="Ground truth scatter plot")
-for i in range(1, clusters+1):
+for i in range(0, clusters):
     cluster_index = np.array(np.where(data_matrix_with_labels[:, -1] == i))
-    plt.plot(data_matrix_with_labels[cluster_index, 0],
-             data_matrix_with_labels[cluster_index, 1], marker='o', color=colors[i-1, :], markersize=1)
+    plt.scatter(data_matrix_with_labels[cluster_index, 0],
+                data_matrix_with_labels[cluster_index, 1], marker='o', color=colors[i-1, :], s=0.9)
+
 
 ###################### CLUSTIVAT #########################
 
@@ -54,13 +55,13 @@ cuts, ind = -np.sort(-cut), np.argsort(-cut)
 ind = np.sort(ind[0:clusters-1])
 
 Pi = np.zeros((n,))
-Pi[smp[I[ind[0]-2]]] = 1
-Pi[smp[I[ind[-1]:-1]]] = clusters
+Pi[smp[I[0:ind[0]-2]]] = 0
+Pi[smp[I[ind[-1]:-1]]] = clusters-1
 
 for i in range(1, clusters-1):
     Pi[smp[I[ind[i-1]:ind[i]-1]]] = i
 
-nsmp = np.setdiff1d(np.linspace(1, clusters, clusters, dtype=int), smp)
+nsmp = np.setdiff1d(np.linspace(0, clusters-1, clusters, dtype=int), smp)
 r = distance2(x[smp, :], x[nsmp, :])
 s = np.argmin(r, axis=0)
 Pi[nsmp] = Pi[smp[s]]
@@ -112,7 +113,7 @@ for i in range(0, clusters):
 
 plt.title('VAT generated partition of the sample points (different colors represent different clusters)')
 
-cluster_matrix_mod = np.zeros((total_no_of_points,), dtype=int)
+cluster_matrix_mod = np.zeros(data_matrix_with_labels.shape, dtype=int)
 length_partition = np.zeros((clusters,), dtype=int)
 
 
@@ -121,7 +122,7 @@ for i in range(0, clusters):
 
 length_partition_sort, length_partition_sort_idx = - \
     np.sort(-length_partition), np.argsort(-length_partition)
-index_remaining = np.linspace(1, clusters, clusters, dtype=int)
+index_remaining = np.linspace(0, clusters-1, clusters, dtype=int)
 
 for i in range(0, clusters):
 
@@ -135,20 +136,28 @@ for i in range(0, clusters):
         cluster_matrix_mod[np.where(Pi == original_idx)[
             0]] = index_remaining[0]
 
-    index_remaining = np.delete(
-        index_remaining, index_remaining == proposed_idx)
+    if type(index_remaining == proposed_idx) == bool:
+        if (index_remaining == proposed_idx) is True:
+            index_remaining = np.delete(
+                index_remaining, index_remaining == proposed_idx)
+    else:
+        if (index_remaining == proposed_idx).shape[0] != 0:
+            index_remaining = np.delete(
+                index_remaining, index_remaining == proposed_idx)
 
 p7 = plt.figure(7)
+pst = np.linspace(0, clusters-1, clusters, dtype=int)
+tst = ["red", "yellow", "blue", "green"]
 for i in range(0, clusters):
-    cluster_matrix_unique = np.unique(cluster_matrix_mod)
-    cluster_index = np.where(cluster_matrix_mod == cluster_matrix_unique[i])[0]
-    plt.plot(x[cluster_index, 0], x[cluster_index, 1],
-             marker='o', color=colors[i-1, :], markersize=1)
+    #cluster_matrix_unique = np.unique(cluster_matrix_mod)
+    cluster_index = np.where(cluster_matrix_mod == pst[i])[0]
+    plt.scatter(x[cluster_index, 0], x[cluster_index, 1],
+                marker='o', color=tst[i], s=0.9)
 
 plt.title('VAT generated partition of the entire dataset (different colors represent different clusters)')
 
 crct_prct_clustivat = (
     (np.max(x.shape)-np.max(np.where(Pitrue-cluster_matrix_mod.T != 0)[0].shape))/np.max(x.shape))*100
-print(crct_prct_clustivat)
+print("crct_prct_clustivat : " + str(crct_prct_clustivat))
 
 plt.show()
