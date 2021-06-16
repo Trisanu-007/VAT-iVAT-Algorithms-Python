@@ -60,7 +60,7 @@ ind = np.sort(ind[0:num_clusters-1])
 
 Pi = np.zeros((n,))
 Pi[I[0:ind[1]]] = 1
-Pi[I[ind[-1]:-1]] = num_clusters
+Pi[I[ind[-1]:-1]] = num_clusters  # should be num_clusters-1
 
 for k in range(1, num_clusters-1):
     Pi[I[ind[k-1]:ind[k]-1]] = k
