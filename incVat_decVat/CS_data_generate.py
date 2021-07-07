@@ -22,8 +22,8 @@ def cs_data_generate(number_of_clusters, odds_matrix, total_no_of_points):
     while l <= max(np.shape(data_matrix_with_labels)):
         for j in range(number_of_clusters):
             for _ in range(odds_matrix[0][j]):
-                data_matrix_with_labels[l:] = [mean_x_matrix[:, j] + var_x_matrix[:, j] * ran.randn(
-                    1), mean_Y_matrix[:, j] + var_y_matrix[:, j] * ran.randn(1), int(j)]
+                data_matrix_with_labels[l:] = [mean_x_matrix[:, j] + var_x_matrix[:, j] * ran(
+                    1), mean_Y_matrix[:, j] + var_y_matrix[:, j] * ran(1), int(j)]
 
                 l += 1
 
@@ -38,7 +38,7 @@ def cs_data_generate(number_of_clusters, odds_matrix, total_no_of_points):
     for l in range(leng):
         diff_vector = data_matrix_with_labels[:, 0:1] - \
             np.array([data_matrix_with_labels[l, 0]*np.ones((leng, 1)),
-                     data_matrix_with_labels[l, 1]*np.ones(leng, 1)])
+                     data_matrix_with_labels[l, 1]*np.ones((leng, 1))])
         dist_matrix[l, :] = np.abs(
             diff_vector[:, 0] + np.complex(0, 1)*diff_vector[:, 1])
 
