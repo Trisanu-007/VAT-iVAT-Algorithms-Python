@@ -49,7 +49,7 @@ for i in range(1, num_clusters+1):
 I = np.array([1, 2])
 RV = dist_matrix[1:2, 1:2]
 RiV = RV
-d = dist_matrix[0,  1]
+d = dist_matrix[0, 1]
 C = np.array([1, 1])
 RI = np.array([1, 2])
 RiV_index = [[0, 2], [2, 0]]
@@ -81,7 +81,6 @@ for i in range(3, N):
     p5 = plt.figure(5)
     plt.rcParams["figure.autolayout"] = True
     plt.imshow(RiV, cmap=cm.get_cmap('gray'), extent=[-1, 1, -1, 1])
-
 
 
 while np.max(I.shape) > 3:

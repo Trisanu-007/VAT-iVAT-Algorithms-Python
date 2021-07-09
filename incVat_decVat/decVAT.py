@@ -52,8 +52,8 @@ def decVAT(RV, C, I, RI, d, point_to_remove):
             C = 1
 
             idx = np.where(removed_points_associates == I)
-            removed_points_associates(idx) = np.empty((0, 1))
-            removed_points_associates_index(idx) = np.empty((0, 1))
+            removed_points_associates[idx] = np.empty((0, 1))
+            removed_points_associates_index[idx] = np.empty((0, 1))
 
         else:
             remaining_points = I[point_to_remove_index+1:end]
@@ -119,16 +119,18 @@ def decVAT(RV, C, I, RI, d, point_to_remove):
                             remaining_points_old_points_method_location_in_RV[
                                 remaining_points_old_points_method_location_in_RV == closest_point_index_remaining_points] = np.empty()
                             pointer_last_point = pointer_last_point+1
-                            d_remaining(1) = np.empty()
-                            C_remaining(1) = np.empty()
+                            d_remaining[0] = np.empty()
+                            C_remaining[0] = np.empty()
 
                             if np.max(remaining_points_old_points_method.size) > 0:
                                 while(np.isin(remaining_points_old_points_method[0], I)):
                                     pointer_last_point = pointer_last_point+1
-                                    d_remaining(1) = np.empty()
-                                    C_remaining(1) = np.empty()
-                                    remaining_points_old_points_method(1) = np.empty()
-                                    remaining_points_old_points_method_location_in_RV(1) = np.empty()
+                                    d_remaining[0] = np.empty()
+                                    C_remaining[0] = np.empty()
+                                    remaining_points_old_points_method[0] = np.empty(
+                                    )
+                                    remaining_points_old_points_method_location_in_RV[0] = np.empty(
+                                    )
 
                                     if(np.max(remaining_points_old_points_method.size) == 0):
                                         break
@@ -210,10 +212,12 @@ def decVAT(RV, C, I, RI, d, point_to_remove):
                         if np.max(remaining_points_old_points_method.size) > 0:
                             while np.isin(remaining_points_old_points_method(0), I):
                                 pointer_last_point = pointer_last_point+1
-                                d_remaining(1) = np.empty()
-                                C_remaining(1) = np.empty()
-                                remaining_points_old_points_method(1) = np.empty()
-                                remaining_points_old_points_method_location_in_RV(1) = np.empty()
+                                d_remaining[0] = np.empty()
+                                C_remaining[0] = np.empty()
+                                remaining_points_old_points_method[0] = np.empty(
+                                )
+                                remaining_points_old_points_method_location_in_RV[0] = np.empty(
+                                )
                                 if max(remaining_points_old_points_method.size) == 0:
                                     break
 
@@ -231,11 +235,15 @@ def decVAT(RV, C, I, RI, d, point_to_remove):
                                     d_remaining[0] = np.empty()
                                     C_remaining[0] = np.empty()
 
-                                    included_old_points(included_old_points == remaining_points_old_points_method(1)) = np.empty()
-                                    included_old_points_location_in_RV(included_old_points_location_in_RV == remaining_points_old_points_method_location_in_RV(1)) = np.empty()
+                                    included_old_points[included_old_points ==
+                                                        remaining_points_old_points_method[0]] = np.empty()
+                                    included_old_points_location_in_RV[included_old_points_location_in_RV ==
+                                                                       remaining_points_old_points_method_location_in_RV[0]] = np.empty()
 
-                                    remaining_points_old_points_method(1) = np.empty()
-                                    remaining_points_old_points_method_location_in_RV(1) = np.empty()
+                                    remaining_points_old_points_method[0] = np.empty(
+                                    )
+                                    remaining_points_old_points_method_location_in_RV[0] = np.empty(
+                                    )
 
                             if np.max(remaining_points_old_points_method.size) == 0:
                                 break
@@ -250,15 +258,17 @@ def decVAT(RV, C, I, RI, d, point_to_remove):
                             [RV_reordering, closest_included_old_points_location_RV])
 
                         if np.max(closest_included_old_points.size) != 0:
-                            remaining_points(remaining_points == closest_included_old_points) = np.empty()
-                            remaining_points_location_in_RV(remaining_points_location_in_RV == closest_included_old_points_location_RV) = np.empty()
+                            remaining_points[remaining_points ==
+                                             closest_included_old_points] = np.empty()
+                            remaining_points_location_in_RV[remaining_points_location_in_RV ==
+                                                            closest_included_old_points_location_RV] = np.empty()
 
-            else :
+            else:
                 min_dist_old_points = d_remaining[0]
                 closest_old_points = remaining_points_old_points_method[0]
                 closest_old_points_location_RV = remaining_points_location_in_RV[0]
                 _, closest_point_C_remaining_old_points = np.isin(
-                I_old(C_remaining[0]), I)
+                    I_old(C_remaining[0]), I)
 
                 dist_included_old_points = RV[
                     included_old_points_location_in_RV, remaining_points_location_in_RV]
@@ -292,7 +302,7 @@ def decVAT(RV, C, I, RI, d, point_to_remove):
                     RV_reordering = np.array(
                         [RV_reordering, closest_old_points_location_RV])
                     remaining_points[remaining_points ==
-                                        closest_old_points] = np.empty()
+                                     closest_old_points] = np.empty()
                     remaining_points_old_points_method[remaining_points_old_points_method == closest_old_points] = np.empty(
                     )
                     remaining_points_old_points_method_location_in_RV[
@@ -303,12 +313,13 @@ def decVAT(RV, C, I, RI, d, point_to_remove):
                     d_remaining[0] = np.empty()
                     C_remaining[0] = np.empty()
                     if np.max(remaining_points_old_points_method.size) > 0:
-                        while np.isin(remaining_points_old_points_method(0), I):
+                        while np.isin(remaining_points_old_points_method[0], I):
                             pointer_last_point = pointer_last_point+1
-                            d_remaining(1) = np.empty()
-                            C_remaining(1) = np.empty()
-                            remaining_points_old_points_method(1) = np.empty()
-                            remaining_points_old_points_method_location_in_RV(1) = np.empty()
+                            d_remaining[0] = np.empty()
+                            C_remaining[0] = np.empty()
+                            remaining_points_old_points_method[0] = np.empty()
+                            remaining_points_old_points_method_location_in_RV[0] = np.empty(
+                            )
                             if max(remaining_points_old_points_method.size) == 0:
                                 break
 
@@ -326,13 +337,17 @@ def decVAT(RV, C, I, RI, d, point_to_remove):
                                 d_remaining[0] = np.empty()
                                 C_remaining[0] = np.empty()
 
-                                included_old_points(included_old_points == remaining_points_old_points_method(1)) = np.empty()
-                                included_old_points_location_in_RV(included_old_points_location_in_RV == remaining_points_old_points_method_location_in_RV(1)) = np.empty()
+                                included_old_points[included_old_points ==
+                                                    remaining_points_old_points_method[0]] = np.empty()
+                                included_old_points_location_in_RV[included_old_points_location_in_RV ==
+                                                                   remaining_points_old_points_method_location_in_RV[0]] = np.empty()
 
-                                remaining_points_old_points_method(1) = np.empty()
-                                remaining_points_old_points_method_location_in_RV(1) = np.empty()
+                                remaining_points_old_points_method[0] = np.empty(
+                                )
+                                remaining_points_old_points_method_location_in_RV[0] = np.empty(
+                                )
 
-                        if np.max(remaining_points_old_points_method.size) == 0:
+                        if np.max(remaining_points_old_points_method.shape) == 0:
                             break
 
                     else:
@@ -345,11 +360,12 @@ def decVAT(RV, C, I, RI, d, point_to_remove):
                         [RV_reordering, closest_included_old_points_location_RV])
 
                     if np.max(closest_included_old_points.size) != 0:
-                        remaining_points(remaining_points == closest_included_old_points) = np.empty()
-                        remaining_points_location_in_RV(remaining_points_location_in_RV == closest_included_old_points_location_RV) = np.empty()
-        
+                        remaining_points[remaining_points ==
+                                         closest_included_old_points] = np.empty()
+                        remaining_points_location_in_RV[remaining_points_location_in_RV ==
+                                                        closest_included_old_points_location_RV] = np.empty()
 
-        RV=RV[RV_reordering,RV_reordering]
-        _,RI=np.sort(I), np.argsort(I)
+        RV = RV[RV_reordering, RV_reordering]
+        _, RI = np.sort(I), np.argsort(I)
 
     return RV, C, I, RI, d

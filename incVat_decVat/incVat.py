@@ -1,5 +1,4 @@
 import numpy as np
-from numpy.core.fromnumeric import shape
 
 
 def length(mat):
@@ -29,7 +28,7 @@ def incVAT(RV, C, I, RI, d, distance_previous_points):
 
     remaining_points = I[new_point_location:-1]
     remaining_points_old_points_method = remaining_points
-    remaining_points_location_in_RV =  np.max(RV.shape)
+    remaining_points_location_in_RV = np.max(RV.shape)
     remaining_points_old_points_method_location_in_RV = remaining_points_location_in_RV
     included_old_points = np.empty()
     included_old_points_location_in_RV = np.empty()
@@ -111,8 +110,9 @@ def incVAT(RV, C, I, RI, d, distance_previous_points):
                     pointer_last_point = pointer_last_point+1
                     d_remaining[0] = np.empty()
                     C_remaining[0] = np.empty()
-                    remaining_points_old_points_method(1) = np.empty()
-                    remaining_points_old_points_method_location_in_RV(1) = np.empty()
+                    remaining_points_old_points_method[0] = np.empty()
+                    remaining_points_old_points_method_location_in_RV[0] = np.empty(
+                    )
 
                     if np.max(remaining_points_old_points_method.shape) == 0:
                         break
@@ -129,8 +129,10 @@ def incVAT(RV, C, I, RI, d, distance_previous_points):
                         d_remaining[0] = np.empty()
                         C_remaining[0] = np.empty()
 
-                        included_old_points(included_old_points == remaining_points_old_points_method[0]) = np.empty()
-                        included_old_points_location_in_RV(included_old_points_location_in_RV == remaining_points_old_points_method_location_in_RV(1)) = np.empty()
+                        included_old_points[included_old_points ==
+                                            remaining_points_old_points_method[0]] = np.empty()
+                        included_old_points_location_in_RV[included_old_points_location_in_RV ==
+                                                           remaining_points_old_points_method_location_in_RV[0]] = np.empty()
 
                         remaining_points_old_points_method[0] = np.empty()
                         remaining_points_old_points_method_location_in_RV[0] = np.empty(
@@ -145,8 +147,10 @@ def incVAT(RV, C, I, RI, d, distance_previous_points):
 
             RV_reordering = np.array(
                 [RV_reordering, closest_new_point_location_RV])
-            remaining_points(remaining_points == closest_new_point) = np.empty()
-            remaining_points_location_in_RV(remaining_points_location_in_RV == closest_new_point_location_RV) = np.empty()
+            remaining_points[remaining_points ==
+                             closest_new_point] = np.empty()
+            remaining_points_location_in_RV[remaining_points_location_in_RV ==
+                                            closest_new_point_location_RV] = np.empty()
 
         if min_dist_method == 3:
             method = np.array([method, 3])
@@ -160,8 +164,10 @@ def incVAT(RV, C, I, RI, d, distance_previous_points):
                     d_remaining[0] = np.empty()
                     C_remaining[0] = np.empty()
 
-                    included_old_points(included_old_points == remaining_points_old_points_method[0]) = np.empty()
-                    included_old_points_location_in_RV(included_old_points_location_in_RV == remaining_points_old_points_method_location_in_RV(1)) = np.empty()
+                    included_old_points[included_old_points ==
+                                        remaining_points_old_points_method[0]] = np.empty()
+                    included_old_points_location_in_RV[included_old_points_location_in_RV ==
+                                                       remaining_points_old_points_method_location_in_RV[0]] = np.empty()
 
                     remaining_points_old_points_method[0] = np.empty()
                     remaining_points_old_points_method_location_in_RV[0] = np.empty(
@@ -176,8 +182,10 @@ def incVAT(RV, C, I, RI, d, distance_previous_points):
 
             RV_reordering = np.array(
                 [RV_reordering, closest_new_point_location_RV])
-            remaining_points(remaining_points == closest_new_point) = np.empty()
-            remaining_points_location_in_RV(remaining_points_location_in_RV == closest_new_point_location_RV) = np.empty()
+            remaining_points[remaining_points ==
+                             closest_new_point] = np.empty()
+            remaining_points_location_in_RV[remaining_points_location_in_RV ==
+                                            closest_new_point_location_RV] = np.empty()
 
     RV_old = RV
     RV = RV[RV_reordering, RV_reordering]
