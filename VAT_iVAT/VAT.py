@@ -1,5 +1,6 @@
+from matplotlib import cm
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 def VAT(mat):
     rows, cols = mat.shape
@@ -22,7 +23,7 @@ def VAT(mat):
     I = np.hstack((I, J[j]))
     J = np.delete(J, J == J[j])
 
-    C = np.array([1, 1])
+    C = np.array([0, 0])
     cut = np.zeros((rows, 1))
     cut[1] = y
 
@@ -58,3 +59,13 @@ if __name__ == "__main__":
 
     arr = np.array(lst)
     rv, c, i, ri, cut = VAT(arr)
+    print(rv)
+    print(c)
+    print(i)
+    print(ri)
+    print(cut)
+    np.savetxt("rv.txt", rv, delimiter=", ") #fmt="%.4e")
+    plt.rcParams["figure.autolayout"] = True
+    plt.imshow(rv, cmap=cm.get_cmap('gray'))
+    plt.title(label="VAT dissimilarity matrix image")
+    plt.show()

@@ -1,3 +1,4 @@
+from matplotlib import cm, pyplot as plt
 from VAT import VAT
 import numpy as np
 
@@ -25,22 +26,29 @@ def iVAT(*args):
         RiV[r, c] = y
         cnei = c[c != i]
         RiV[r, cnei] = np.max(np.array(
-            [RiV[r, cnei], RiV[i, cnei]])) if cnei.shape[0] != 0 else np.empty(0)
+            [RiV[r, cnei], RiV[i, cnei]]), axis=0) if cnei.shape[0] != 0 else np.empty(0)
         RiV[c, r] = RiV[r, c].T
+        # np.savetxt("outputs\\riv_{}.txt".format(r), RiV, fmt="%f",delimiter="  ")
 
     return RiV, RV, reordering_mat
 
 
 # This is used for debugging purposes only
 if __name__ == "__main__":
-    f = open("rv.txt", "r")
+    f = open("D:\\SMOP\\New folder (2)\\MattoPy\VAT_iVAT\\rv.txt", "r")
     lst = []
     for line in f:
-        strd = line.strip().split(',')
+        strd = line.strip().split(",")
         lst.append([float(x) for x in strd])
 
     arr = np.array(lst)
     RiV, RV, reordering_mat = iVAT(arr, 1)
-    np.savetxt("riv.xls", RiV, fmt="%e")
-    print(RiV[-1, -2])
+    print(RV)
     print(reordering_mat)
+    np.savetxt("riv.xls", RiV, fmt="%f",delimiter="  ")
+    # print(RiV[-1, -2])
+    # print(reordering_mat)
+    plt.rcParams["figure.autolayout"] = True
+    plt.imshow(RiV, cmap=cm.get_cmap('gray'))
+    plt.title(label="iVAT dissimilarity matrix image")
+    plt.show()

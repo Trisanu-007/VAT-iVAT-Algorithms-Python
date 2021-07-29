@@ -67,13 +67,13 @@ for k in range(1, num_clusters-1):
 
 p2 = plt.figure(2)
 plt.rcParams["figure.autolayout"] = True
-plt.imshow(rv, cmap=cm.get_cmap('gray'), extent=[-1, 1, -1, 1])
+plt.imshow(rv, cmap=cm.get_cmap('gray'))
 plt.title(label="VAT reordered dissimilarity matrix image")
 
 
 p3 = plt.figure(3)
 plt.rcParams["figure.autolayout"] = True
-plt.imshow(RiV, cmap=cm.get_cmap('gray'), extent=[-1, 1, -1, 1])
+plt.imshow(RiV, cmap=cm.get_cmap('gray'))
 plt.title(label="iVAT dissimilarity matrix image")
 
 

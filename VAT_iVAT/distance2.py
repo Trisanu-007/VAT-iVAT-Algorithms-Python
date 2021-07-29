@@ -13,3 +13,16 @@ def distance2(A, B):
     zero_mask = np.less(D_squared, 0.0)
     D_squared[zero_mask] = 0.0
     return np.sqrt(D_squared)
+
+
+if __name__ == '__main__':
+    f = open("x.txt", "r")
+    lst = []
+    for line in f:
+        strd = line.strip().split(',')
+        lst.append([float(x) for x in strd])
+
+    arr = np.array(lst)
+    rs = distance2(arr, arr)
+    print(rs)
+    np.savetxt("rs.txt", rs, delimiter=",", fmt="%.4e")
