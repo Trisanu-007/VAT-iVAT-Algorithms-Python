@@ -25,7 +25,7 @@ def iVAT(*args):
         RiV[r, c] = y
         cnei = c[c != i]
         RiV[r, cnei] = np.max(np.array(
-            [RiV[r, cnei], RiV[i, cnei]])) if cnei.shape[0] != 0 else np.empty(0)
+            [RiV[r, cnei], RiV[i, cnei]]), axis=0) if cnei.shape[0] != 0 else np.empty(0)
         RiV[c, r] = RiV[r, c].T
 
     return RiV, RV, reordering_mat

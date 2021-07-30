@@ -73,13 +73,13 @@ print("Time elapsed : ", str(toc-tic))
 
 p2 = plt.figure(2)
 plt.rcParams["figure.autolayout"] = True
-plt.imshow(rv, cmap=cm.get_cmap('gray'), extent=[-1, 1, -1, 1])
-plt.title(label="VAT reordered dissimilarity matrix image")
+plt.imshow(rv, cmap=cm.get_cmap('gray'))
+plt.title(label="clustiVAT reordered dissimilarity matrix image")
 
 
 p3 = plt.figure(3)
 plt.rcParams["figure.autolayout"] = True
-plt.imshow(RiV, cmap=cm.get_cmap('gray'), extent=[-1, 1, -1, 1])
+plt.imshow(RiV, cmap=cm.get_cmap('gray'))
 plt.title(label="iVAT dissimilarity matrix image")
 
 p4 = plt.figure(4)
