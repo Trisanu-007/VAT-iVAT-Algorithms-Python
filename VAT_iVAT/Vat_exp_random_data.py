@@ -9,6 +9,8 @@ from data_generate_non_cs import data_generate_non_cs
 from distance2 import distance2
 from iVAT import iVAT
 from VAT import VAT
+from scipy.io import savemat
+
 
 total_num_of_points = 2000
 num_clusters = 4
@@ -45,6 +47,9 @@ tic = time.time()
 
 pi_true = x[:, -1]
 x = x[:, 0:-1]
+
+mdict = {"arr": x}
+savemat("dataset_for_vat.mat", mdict)
 
 rs = distance2(x, x)
 rv, C, I, RI, cut = VAT(rs)
